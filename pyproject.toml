@@ -1,0 +1,91 @@
+# pyproject.toml
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "localsumm"
+version = "0.1.0"
+authors = [
+  { name="Votre Nom", email="votre@email.com" }, # Adaptez ceci
+]
+description = "Outil de résumé de texte local"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT License" } # Ou une autre licence de votre choix
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: General",
+]
+
+# Dépendances principales (on les ajoutera au fur et à mesure)
+dependencies = [
+    "requests>=2.26.0",      # Pour les appels API (Ollama)
+    "openai-whisper>=20231117", # Transcription (vérifiez la dernière version)
+    "yt-dlp>=2023.12.30",   # Téléchargement YouTube (vérifiez la dernière version)
+    "python-dotenv>=1.0.0",  # Gestion des variables d'env
+    "typer[all]>=0.9.0",    # Pour la CLI (avec Rich pour la couleur)
+    "loguru>=0.7.0",       # Logging simplifié (optionnel)
+    "pydub>=0.25.0",       # Manipulation audio (optionnel, pour éviter ffmpeg direct)
+    "transformers>=4.30.0", # Pour le tokenizer Llama 3
+    "torch>=2.0.0",        # Dépendance de Whisper & Transformers (vérifiez compatibilité M1/MPS)
+    "sentencepiece>=0.1.98",# Dépendance tokenizer
+    # "ollama>=0.1.8",      # Optionnel: Client Python officiel Ollama
+]
+
+[project.scripts]
+# Point d'entrée de la CLI (sera défini plus tard)
+localsumm = "localsumm.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/votre_username/LocalSumm" # Adaptez ceci
+Issues = "https://github.com/votre_username/LocalSumm/issues" # Adaptez ceci
+
+# Dépendances de développement
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.4.0", # Linter / Formatter
+    "mypy>=1.0.0", # Type checker
+    "pre-commit>=3.0.0",
+    "types-requests", # Stubs de types pour mypy
+    # Ajoutez d'autres stubs si mypy se plaint
+]
+
+# Configuration des outils
+[tool.ruff]
+line-length = 88
+target-version = "py39" # Version Python minimale ciblée
+select = ["E", "W", "F", "I", "C", "B", "UP", "N", "S", "ANN", "ASYNC", "RUF"] # Règles Ruff (assez large)
+ignore = [
+    "ANN101", # Pas besoin de type hint pour self
+    "ANN102", # Pas besoin de type hint pour cls
+    "ANN401", # Autoriser 'Any' parfois (à utiliser avec parcimonie)
+]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.ruff.lint.isort]
+known-first-party = ["localsumm"] # Indique que 'localsumm' est votre code
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+ignore_missing_imports = true # Plus facile au début, mais False pour plus de rigueur
+# exclude = ["tests/"] # Exclure les tests si vous ne typez pas tout au début
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --cov=src/localsumm --cov-report=term-missing" # Options pytest
+testpaths = [
+    "tests",
+]

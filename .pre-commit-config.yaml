@@ -1,0 +1,23 @@
+# .pre-commit-config.yaml
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.6.0 # Vérifiez la dernière version stable
+  hooks:
+  - id: check-yaml
+  - id: end-of-file-fixer
+  - id: trailing-whitespace
+  - id: check-toml
+  - id: check-added-large-files # Évite de commiter de gros fichiers par erreur
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.4.4 # Vérifiez la dernière version stable de ruff
+  hooks:
+  - id: ruff
+    args: [--fix, --exit-non-zero-on-fix]
+  - id: ruff-format
+# Optionnel mais recommandé: mypy
+# - repo: https://github.com/pre-commit/mirrors-mypy
+#   rev: v1.9.0 # Vérifiez la dernière version stable
+#   hooks:
+#     - id: mypy
+#       # args: [--strict] # Peut être trop strict au début
+#       additional_dependencies: [types-requests] # Ajoutez les stubs ici
