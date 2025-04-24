@@ -38,6 +38,10 @@ dependencies = [
     "torch>=2.0.0",        # Dépendance de Whisper & Transformers (vérifiez compatibilité M1/MPS)
     "sentencepiece>=0.1.98",# Dépendance tokenizer
     # "ollama>=0.1.8",      # Optionnel: Client Python officiel Ollama
+	"transformers>=4.30.0",
+    "tiktoken>=0.4.0",
+    # Optionnel mais recommandé pour le découpage:
+    "langchain-text-splitters>=0.0.1",
 ]
 
 [project.scripts]
@@ -64,12 +68,14 @@ dev = [
 [tool.ruff]
 line-length = 88
 target-version = "py39" # Version Python minimale ciblée
-select = ["E", "W", "F", "I", "C", "B", "UP", "N", "S", "ANN", "ASYNC", "RUF"] # Règles Ruff (assez large)
-ignore = [
+lint.select = ["E", "W", "F", "I", "C", "B", "UP", "N", "S", "ANN", "ASYNC", "RUF"] # Règles Ruff (assez large)
+lint.ignore = [
     "ANN101", # Pas besoin de type hint pour self
     "ANN102", # Pas besoin de type hint pour cls
     "ANN401", # Autoriser 'Any' parfois (à utiliser avec parcimonie)
 ]
+
+
 
 [tool.ruff.format]
 quote-style = "double"

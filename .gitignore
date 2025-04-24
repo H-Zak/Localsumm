@@ -89,3 +89,5 @@ downloads/ # Pour les fichiers YT et audio extrait
 *.mp3
 *.wav
 .qodo
+
+Questions.txt
